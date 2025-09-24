@@ -1,0 +1,184 @@
+/* define color vars */
+:root {
+    --light: #f9fafb;
+    --gray-light: #eaecf0;
+    --dark-blue: #00305b;
+    --blue: #00447a;
+    --blue-light: #155eef;
+    --border-color: #d0d5dd;
+    --header-color: #101828;
+    --red: #d92d20;
+}
+
+/* load dm sans font locally */
+@font-face {
+    font-family: 'DM Sans';
+    src: url('/fonts/DMSans-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    margin: 0px;
+    display: flex;
+    width: 100vw;
+    height: 100%;
+    font-size: 16px;
+    font-family: 'DM Sans', sans-serif;
+}
+
+form {
+    padding: 2rem;
+}
+
+main {
+    width: 50%;
+    background-color: var(--light);
+    overflow-y: auto;
+}
+
+header {
+    background: white;
+    border-top: 1rem solid var(--dark-blue);
+    padding: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.candidate {
+    display: flex;
+    align-items: start;
+    margin-bottom: 1rem;
+}
+
+/* badge */
+.candidate h4 {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    background: var(--dark-blue);
+    color: white;
+    border-radius: 0.5rem;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    height: fit-content;
+    margin-right: 1rem;
+}
+
+.candidate fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem; 
+    border: none;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    background-color: var(--gray-light);
+    position: relative;
+}
+
+.candidate fieldset .form-group {
+    flex: 1 1 300px;
+    min-width: 300px;
+    margin: 0;
+}
+
+.candidate fieldset .remove-candidate {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.25rem;
+    margin: 0;
+    background: transparent;
+    color: var(--red);
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    line-height: 0;
+}
+
+.candidate fieldset .remove-candidate:hover,
+.candidate fieldset .remove-candidate:focus {
+    color: var(--blue);
+    background: rgba(0, 0, 0, 0.05);
+    outline: none;
+}
+
+.candidate fieldset .remove-candidate svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.candidate fieldset .form-group input {
+    width: calc(100% - 3rem);
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 600;
+    color: var(--header-color);
+}
+
+input {
+    border: 2px solid;
+    border-color: var(--border-color);
+    background: white;
+    padding: 1rem 1.5rem 1rem 1rem;
+    height: 1.2rem;
+    font-size: 1rem;
+    width: 32rem;
+}
+
+input:hover, input:focus {
+    border-color: var(--blue-light);
+    outline: none;
+}
+
+button {
+    font-size: 14px;
+    margin: 1rem 0;
+    padding: 1rem 1.75rem;
+    font-size: 1rem;
+    background: var(--dark-blue);
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+button:hover {
+    background: var(--blue);
+}
+
+#download {
+    position: absolute;
+    bottom: 1rem;
+    right: calc(25% + 1rem);
+    transform: translateX(50%);
+    z-index: 100;
+}
+
+#content {
+    width: 50%;
+    padding: 2rem;
+    background: #eee;
+    position: relative;
+    overflow-y: scroll;
+    border-left: 2px solid black;
+}
+
+#content svg {
+    background: white;
+    width: 100%;
+    height: calc(100vw / 2 * 1.414 - 4rem - 2px);
+}
