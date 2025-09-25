@@ -191,6 +191,11 @@ document.getElementById('typst').addEventListener('load', async function () {
 
   candidatesContainer.addEventListener('click', event => {
     const removeButton = event.target.closest('.remove-candidate');
+
+    if (!removeButton) {
+      return;
+    }
+
     const candidate = removeButton.closest('.candidate');
 
     candidate.remove();
