@@ -14,7 +14,7 @@
   hanging-indent: 20pt,
 )
 
-#let formData = json("form-data")
+#let input = json("/inputs/h1.json")
 
 #show heading: set block(
   stroke: (
@@ -32,6 +32,8 @@
 
 Aanduiding boven de kandidatenlijst:
 
+*#input.name*
+
 = Kandidaten op de lijst
 
 #table(
@@ -41,7 +43,7 @@ Aanduiding boven de kandidatenlijst:
     y: if y > 1 { 0.5pt + luma(220) },
   ),
   table.header[][_naam_][_voorletters_][_geboortedatum_][_woonplaats_],
-  [1], [], [], [], [],
-  [2], [], [], [], [],
-  [3], [], [], [], [],
+  ..input.candidate.map(c => {
+    ([#c.number], c.name, c.initials, c.birthdate, c.locality)
+  }).flatten()
 )

@@ -15,8 +15,8 @@
     </header>
     <form>
       <div class="form-group">
-        <label for="input">Aanduiding van de politieke groepering</label>
-        <input type="text" id="input" name="party-name" value="Partijdige partij" />
+        <label for="name">Aanduiding van de politieke groepering</label>
+        <input type="text" id="name" name="name"/>
       </div>
       <div id="candidates">
         <h3>Kandidaten</h3>
@@ -33,19 +33,19 @@
               </button>
               <div class="form-group">
                 <label for="name">Naam</label>
-                <input type="text" name="candidate-name" data-field="name" value="" />
+                <input type="text" name="candidate[][name]" />
               </div>
               <div class="form-group">
                 <label for="initials">Voorletters</label>
-                <input type="text" name="candidate-initials" data-field="initials" value="" />
+                <input type="text" name="candidate[][initials]" />
               </div>
               <div class="form-group">
                 <label for="birthdate">Geboortedatum</label>
-                <input type="date" name="candidate-birthdate" data-field="birthdate" value="" />
+                <input type="text" placeholder="dd-mm-jjjj" name="candidate[][birthdate]" />
               </div>
               <div class="form-group">
                 <label for="locality">Woonplaats</label>
-                <input type="text" name="candidate-locality" data-field="locality" value="" />
+                <input type="text" name="candidate[][locality]" />
               </div>
             </fieldset>
           </div>
