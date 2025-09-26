@@ -47,3 +47,8 @@ Aanduiding boven de kandidatenlijst:
     ([#c.number], c.name, c.initials, c.birthdate, c.locality)
   }).flatten()
 )
+
+= QR code
+
+QR-code met de alle gegevens van deze kandidatenlijst:
+#image("/inputs/qr.svg", width: 90mm)

@@ -143,19 +143,35 @@ document.getElementById('typst').addEventListener('load', async function () {
     return result;
   };
 
+  const addInputs = () => {
+    const data = JSON.stringify(collectFormData());
+    const qrData = `${window.location.origin}?data=${btoa(data)}`;
+    const qrImage = qr.encodeQR(qrData, 'svg');
+
+    $typst.addSource('/inputs/qr.svg', qrImage);
+    $typst.addSource('/inputs/h1.json', data);
+  };
+
   const previewSvg = async () => {
-    $typst.addSource('/inputs/h1.json', JSON.stringify(collectFormData()));
+    addInputs();
 
     try {
       const svg = await $typst.svg({ mainContent: template });
       contentDiv.innerHTML = svg;
+
+      const svgElem = contentDiv.firstElementChild;
+      const width = Number.parseFloat(svgElem.getAttribute('width'));
+      const height = Number.parseFloat(svgElem.getAttribute('height'));
+      const cw = contentDiv.clientWidth - 64;
+      svgElem.setAttribute('width', cw);
+      svgElem.setAttribute('height', (height * cw) / width);
     } catch (error) {
       console.error('Unable to render Typst preview', error);
     }
   };
 
   const exportPdf = async () => {
-    $typst.addSource('/inputs/h1.json', JSON.stringify(collectFormData()));
+    addInputs();
 
     try {
       const pdfData = await $typst.pdf({ mainContent: template });
@@ -172,15 +188,42 @@ document.getElementById('typst').addEventListener('load', async function () {
     }
   };
 
-  // mock data
-  form.name.value = mockName;
+  if (window.location.search) {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const data = params.get('data');
+      if (data) {
+        const decoded = atob(data);
+        const parsed = JSON.parse(decoded);
 
-  for (let i = 0; i < 5; i++) {
-    const candidateElement = createCandidateElement();
-    candidatesContainer.appendChild(candidateElement);
+        form.name.value = parsed.name;
+        candidatesContainer.innerHTML = '';
+
+        parsed.candidate.forEach((candidate) => {
+          const candidateElement = createCandidateElement();
+          candidateElement.querySelector('input[name$="[name]"]').value = candidate.name || '';
+          candidateElement.querySelector('input[name$="[initials]"]').value = candidate.initials || '';
+          candidateElement.querySelector('input[name$="[birthdate]"]').value = candidate.birthdate || '';
+          candidateElement.querySelector('input[name$="[locality]"]').value = candidate.locality || '';
+          candidatesContainer.appendChild(candidateElement);
+        });
+
+        updateCandidateNumbers();
+      }
+    } catch (e) {
+      console.error('Unable to parse data from URL', e);
+    }
+  } else {
+    form.name.value = mockName;
+
+    for (let i = 0; i < 5; i++) {
+      const candidateElement = createCandidateElement();
+      candidatesContainer.appendChild(candidateElement);
+    }
+
+    updateCandidateNumbers();
   }
 
-  updateCandidateNumbers();
 
   addCandidateButton.addEventListener('click', () => {
     const newCandidate = createCandidateElement();

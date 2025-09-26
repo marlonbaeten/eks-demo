@@ -197,6 +197,4 @@ button:hover {
 
 #content svg {
     background: white;
-    width: 100%;
-    height: calc(100vw / 2 * 1.414 - 4rem - 2px);
 }
