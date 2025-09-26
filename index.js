@@ -145,10 +145,6 @@ document.getElementById('typst').addEventListener('load', async function () {
 
   const addInputs = () => {
     const data = JSON.stringify(collectFormData());
-    const qrData = `${window.location.origin}?data=${btoa(data)}`;
-    const qrImage = qr.encodeQR(qrData, 'svg');
-
-    $typst.addSource('/inputs/qr.svg', qrImage);
     $typst.addSource('/inputs/h1.json', data);
   };
 
@@ -181,7 +177,7 @@ document.getElementById('typst').addEventListener('load', async function () {
     }
   };
 
-  const previewSvg = debounce(renderPreviewSvg, 200);
+  const previewSvg = debounce(renderPreviewSvg, 100);
 
   const exportPdf = async () => {
     addInputs();
