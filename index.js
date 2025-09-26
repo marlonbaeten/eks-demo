@@ -106,7 +106,7 @@ document.getElementById('typst').addEventListener('load', async function () {
       formElement.querySelector('input[name^="candidate"][name$="[locality]"]').name = `candidate[${index}][locality]`;
     });
 
-    previewSvg();
+    renderPreviewSvg();
   };
 
   const createCandidateElement = () => {
@@ -152,7 +152,18 @@ document.getElementById('typst').addEventListener('load', async function () {
     $typst.addSource('/inputs/h1.json', data);
   };
 
-  const previewSvg = async () => {
+  const debounce = (fn, delay) => {
+    let timeoutId;
+
+    return (...args) => {
+      window.clearTimeout(timeoutId);
+      timeoutId = window.setTimeout(() => {
+        fn(...args);
+      }, delay);
+    };
+  };
+
+  const renderPreviewSvg = async () => {
     addInputs();
 
     try {
@@ -169,6 +180,8 @@ document.getElementById('typst').addEventListener('load', async function () {
       console.error('Unable to render Typst preview', error);
     }
   };
+
+  const previewSvg = debounce(renderPreviewSvg, 200);
 
   const exportPdf = async () => {
     addInputs();
